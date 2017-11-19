@@ -1,0 +1,4 @@
+﻿  mainWindow.cpp
+  App.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\x64\Debug\soundmixer.exe
+  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\x64\Debug\soundmixer.pdb (Partial PDB)

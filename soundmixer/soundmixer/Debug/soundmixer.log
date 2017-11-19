@@ -1,0 +1,6 @@
+﻿  Mixer.cpp
+Mixer.cpp(108): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+Mixer.cpp(184): warning C4018: '<': signed/unsigned mismatch
+  mainWindow.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\Debug\soundmixer.exe
+  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\Debug\soundmixer.pdb (Partial PDB)
