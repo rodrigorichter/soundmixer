@@ -58,7 +58,7 @@ double Mixer::SetMasterVolume(double nVolume, bool bScalar) { // volume value fr
 	if (currentVolume == newVolume)
 		return currentVolume;
 	else
-		return -1;
+		return newVolume;
 }
 
 double Mixer::SetMuteMaster(bool bMute) {

@@ -9,6 +9,8 @@
 
 char COMPort[32];
 Serial *serialCon;
+TCHAR processName[MAX_PATH] = TEXT("Empty.exe");
+char buffer[20];
 
 namespace soundmixer {
 

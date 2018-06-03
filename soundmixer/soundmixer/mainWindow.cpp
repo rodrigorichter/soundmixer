@@ -4,7 +4,6 @@
 #include "App.h"
 #include "atlconv.h"
 #include <string>
-
 #include <iostream>
 
 
@@ -18,16 +17,15 @@ int main()
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	soundmixer::mainWindow form;
+	
+	std::cout << "Digite a porta serial(COM1, COM2..)" << endl;
+	std::cin >> COMPort;
+
+	serialCon = new Serial(COMPort);
 	Mixer m;
-	/*char input[10] = "";
-	cout << "qual a com port? Escrever COM1, COM2, etc...: ";
-	cin >> input;
-	Serial s(input);*/
-	char buffer[20];
-	TCHAR processName[MAX_PATH] = TEXT("Empty.exe");
-	while (0) {
+	while (1) {
 		/*strcpy(buffer, "empt");
-		s.readSerial(buffer, 4);
+		serialCon->readSerial(buffer, 4);
 		buffer[4] = '\0';
 		if (!strcmp(buffer, "tmut")) {
 			if (m.GetMuteMaster() == true)
@@ -37,30 +35,34 @@ int main()
 		}
 
 		if (!strcmp(buffer, "svap")) {
-			s.readSerial(buffer, 20);
+			serialCon->readSerial(buffer, 20);
 			_tcscpy(processName, (TCHAR*)buffer);
-			s.readSerial(buffer, 1);
+			serialCon->readSerial(buffer, 1);
 			float v = buffer[0];
-			 m.SetApplicationVolume(processName, v);
+			m.SetApplicationVolume(processName, v);
 		}
 
 		if (!strcmp(buffer, "tmap")) {
-			s.readSerial(buffer, 20);
+			serialCon->readSerial(buffer, 20);
 			_tcscpy(processName, (TCHAR*)buffer);
-			s.readSerial(buffer, 1);
+			serialCon->readSerial(buffer, 1);
 			float v = buffer[0];
-			
+
 			if (m.GetMuteApplication(processName) == true)
 				m.SetMuteApplication(processName, false);
 			else if (m.GetMuteApplication(processName) == false)
 				m.SetMuteApplication(processName, true);
 		}*/
+		serialCon->readSerial(buffer, 3);
+		double vol = atoi(buffer)/100.0;
+		std::cout << "Volume: " << m.SetMasterVolume(vol, true) << endl;
+		
 	}
-	double vol = 0.25;
-	//m.SetMasterVolume(vol, true);
-	std::cout << m.SetMuteApplication(processName,true);
+	//
+	//std::cout << m.SetMuteApplication(processName,true);
+	
 
-	Application::Run(%form);
+	//Application::Run(%form);
 }
 
 void soundmixer::mainWindow::setComPort(std::string inputPort)

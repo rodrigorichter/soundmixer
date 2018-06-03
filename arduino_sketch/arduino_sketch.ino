@@ -1,32 +1,38 @@
-
-// constants won't change. They're used here to set pin numbers:
-const int buttonPin = 2;     // the number of the pushbutton pin
-const int ledPin =  13;      // the number of the LED pin
-int previousState = LOW;
-// variables will change:
-int buttonState = 0;         // variable for reading the pushbutton status
-
+/*
+* Ultrasonic Sensor HC-SR04 and Arduino Tutorial
+*
+* by Dejan Nedelkovski,
+* www.HowToMechatronics.com
+*
+*/
+// defines pins numbers
+const int trigPin = 9;
+const int echoPin = 10;
+// defines variables
+long duration;
+int distance;
 void setup() {
-  Serial.begin(9600);
-  // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
-  // initialize the pushbutton pin as an input:
-  pinMode(buttonPin, INPUT);
+pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+Serial.begin(9600); // Starts the serial communication
 }
-
 void loop() {
-  buttonState = digitalRead(buttonPin);
-
-  if (buttonState == HIGH) {
-    if (previousState == LOW) {
-      Serial.print("tmut");
-      previousState = HIGH;
-    }
-    digitalWrite(ledPin, HIGH);
-  } else {
-    if (previousState == HIGH) {
-      previousState = LOW;
-    }
-    digitalWrite(ledPin, LOW);
-  }
+// Clears the trigPin
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
+// Calculating the distance
+distance= duration*0.034/2;
+// Prints the distance on the Serial Monitor
+if (distance >=100) distance=99;
+if(distance<10) {
+  Serial.println("00");
+}
+else Serial.println(distance);
+delay(100);
 }
