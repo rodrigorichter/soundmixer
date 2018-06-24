@@ -4,6 +4,8 @@
 #include "App.h"
 #include "atlconv.h"
 #include <string>
+#include <ctime>
+#include <stdlib.h>
 #include <iostream>
 
 
@@ -23,7 +25,13 @@ int main()
 
 	serialCon = new Serial(COMPort);
 	Mixer m;
-	while (1) {
+
+	std::clock_t start;
+	start = std::clock();
+	float currTime = 0;
+	std::cout << "Starting.." << endl;
+	double oldVol = 0.99;
+	while (0) {
 		/*strcpy(buffer, "empt");
 		serialCon->readSerial(buffer, 4);
 		buffer[4] = '\0';
@@ -53,16 +61,26 @@ int main()
 			else if (m.GetMuteApplication(processName) == false)
 				m.SetMuteApplication(processName, true);
 		}*/
+		currTime = (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000);
 		serialCon->readSerial(buffer, 3);
-		double vol = atoi(buffer)/100.0;
-		std::cout << "Volume: " << m.SetMasterVolume(vol, true) << endl;
+		if (currTime > 1000) {
+			double vol = atoi(buffer) / 100.0;
+			if (oldVol == vol) {
+				std::cout << "oi: " << oldVol * 100 << endl;
+			}
+			else if (abs(vol - oldVol) < (0.2)) {
+				std::cout << "Volume: " << abs(vol - oldVol) << endl;
+				m.SetMasterVolume(vol, true);
+			}
+			oldVol = vol;
+		}
 		
 	}
 	//
 	//std::cout << m.SetMuteApplication(processName,true);
 	
 
-	//Application::Run(%form);
+	Application::Run(%form);
 }
 
 void soundmixer::mainWindow::setComPort(std::string inputPort)

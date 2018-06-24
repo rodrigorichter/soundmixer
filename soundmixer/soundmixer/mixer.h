@@ -8,6 +8,7 @@
 #include <comip.h>
 #include <tchar.h>
 #include <psapi.h>
+#include <vector>
 
 
 using namespace std;
@@ -25,5 +26,6 @@ ref class Mixer
 		int SetApplicationVolume(TCHAR *app, float v);
 		BOOL GetMuteApplication(TCHAR *app);
 		int SetMuteApplication(TCHAR *app, BOOL pbMute);
+		vector<string> GetOpenApplicationsList();
 	};
 

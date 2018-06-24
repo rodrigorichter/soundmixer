@@ -377,6 +377,76 @@ BOOL Mixer::GetMuteApplication(TCHAR *app) {
 	return -1;
 }
 
+vector<string> Mixer::GetOpenApplicationsList() {
+	vector<string> appList;
+
+	static PROPERTYKEY key;
+
+	GUID IDevice_FriendlyName = { 0xa45c254e, 0xdf1c, 0x4efd,{ 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0 } };
+	key.pid = 14;
+	key.fmtid = IDevice_FriendlyName;
+
+	HRESULT hr = NULL;
+
+
+	IMMDeviceEnumerator* pEnumerator = NULL;
+	IMMDevice* pDevice = NULL;
+	IAudioSessionControl* pSessionControl = NULL;
+	IAudioSessionControl2* pSessionControl2 = NULL;
+	IAudioSessionManager* pSessionManager = NULL;
+	IAudioSessionManager2* pSessionManager2 = NULL;
+	IAudioSessionEnumerator* pEnum = NULL;
+	ISimpleAudioVolume* pVolume = NULL;
+
+	LPWSTR sessionDisplayName = NULL;
+	DWORD procId = NULL;
+	IPropertyStore *pProps = NULL;
+
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+
+	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_INPROC_SERVER,
+		__uuidof(IMMDeviceEnumerator), (LPVOID *)&pEnumerator);
+
+	hr = pEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pDevice);
+
+	hr = pDevice->Activate(__uuidof(IAudioSessionManager2), CLSCTX_ALL, NULL, (void**)&pSessionManager2);
+	hr = pDevice->Activate(__uuidof(IAudioSessionManager), CLSCTX_ALL, NULL, (void**)&pSessionManager);
+
+	hr = pSessionManager2->GetSessionEnumerator(&pEnum);
+
+	int count;
+	hr = pEnum->GetCount(&count);
+	for (ULONG i = 0; i < count; i++) { // traverse through all open audio sessions
+										// get audio session
+		hr = pEnum->GetSession(i, &pSessionControl);
+		hr = pSessionControl->QueryInterface(&pSessionControl2);
+
+		// get process id of this session
+		hr = pSessionControl2->GetProcessId(&procId);
+
+		// find process name using its id
+		TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
+		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
+			PROCESS_VM_READ,
+			FALSE, procId);
+		if (NULL != hProcess) {
+			HMODULE hMod;
+			DWORD cbNeeded;
+			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded)) {
+				GetModuleBaseName(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
+			}
+		}
+
+		CloseHandle(hProcess);
+		
+		appList.push_back(szProcessName);
+			
+	}
+	CoUninitialize();
+	return appList;
+
+}
+
 int Mixer::SetMuteApplication(TCHAR *app, BOOL pbMute) {
 	static PROPERTYKEY key;
 

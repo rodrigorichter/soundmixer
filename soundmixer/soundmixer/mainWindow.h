@@ -7,10 +7,12 @@
 #include <msclr\marshal_cppstd.h>
 #include <iostream>
 
+
 char COMPort[32];
 Serial *serialCon;
 TCHAR processName[MAX_PATH] = TEXT("Empty.exe");
 char buffer[20];
+vector<string> appList;
 
 namespace soundmixer {
 
@@ -54,6 +56,9 @@ namespace soundmixer {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::ComboBox^  comboBox2;
 
+	private: System::Windows::Forms::ListBox^  listBox1;
+
+
 
 	protected:
 
@@ -75,12 +80,13 @@ namespace soundmixer {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->SuspendLayout();
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(9, 9);
+			this->label1->Location = System::Drawing::Point(202, 25);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(59, 13);
 			this->label1->TabIndex = 0;
@@ -99,7 +105,7 @@ namespace soundmixer {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(12, 52);
+			this->button1->Location = System::Drawing::Point(267, 23);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 3;
@@ -127,11 +133,23 @@ namespace soundmixer {
 			this->comboBox2->TabIndex = 6;
 			this->comboBox2->SelectedIndexChanged += gcnew System::EventHandler(this, &mainWindow::comboBox2_SelectedIndexChanged);
 			// 
+			// listBox1
+			// 
+			this->listBox1->Enabled = false;
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"aeea", L"eaeae", L"aeeae" });
+			this->listBox1->Location = System::Drawing::Point(188, 52);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(154, 147);
+			this->listBox1->TabIndex = 8;
+			this->listBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &mainWindow::listBox1_SelectedIndexChanged);
+			// 
 			// mainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(432, 348);
+			this->Controls->Add(this->listBox1);
 			this->Controls->Add(this->comboBox2);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->comboBox1);
@@ -144,10 +162,21 @@ namespace soundmixer {
 
 		}
 #pragma endregion
+		ref class ManagedGlobals abstract sealed {
+		public:
+			static Mixer m;;
+		};
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		cout << "eae" << endl;
+		appList = ManagedGlobals::m.GetOpenApplicationsList();
+		listBox1->Items->Clear();
+		for (int i = 0; i < appList.size(); i++) {
+			//listBox1->Items->Add(String::Format("%s",appList[0]));
+		}
+		
+
+		
 	}
 	private: System::Void comboBox2_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 		Object^ selectedItem = comboBox2->SelectedItem;
@@ -155,5 +184,9 @@ namespace soundmixer {
 		setComPort(msclr::interop::marshal_as<std::string>(s));
 		serialCon = new Serial(COMPort);
 	}
+
+private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+
+}
 };
 }
