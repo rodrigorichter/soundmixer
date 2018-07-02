@@ -20,8 +20,8 @@ int main()
 	Application::SetCompatibleTextRenderingDefault(false);
 	soundmixer::mainWindow form;
 	
-	std::cout << "Digite a porta serial(COM1, COM2..)" << endl;
-	std::cin >> COMPort;
+	//std::cout << "Digite a porta serial(COM1, COM2..)" << endl;
+	//std::cin >> COMPort;
 
 	serialCon = new Serial(COMPort);
 	Mixer m;
@@ -29,7 +29,7 @@ int main()
 	std::clock_t start;
 	start = std::clock();
 	float currTime = 0;
-	std::cout << "Starting.." << endl;
+	//std::cout << "Starting.." << endl;
 	double oldVol = 0.99;
 	while (0) {
 		/*strcpy(buffer, "empt");

@@ -1,6 +1,24 @@
-﻿  Mixer.cpp
-Mixer.cpp(108): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
-Mixer.cpp(184): warning C4018: '<': signed/unsigned mismatch
-  mainWindow.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
-  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\Debug\soundmixer.exe
-  soundmixer.vcxproj -> D:\Documents\Visual Studio 2015\Projects\soundmixer\Debug\soundmixer.pdb (Partial PDB)
+﻿  App.cpp
+  mainWindow.cpp
+d:\dev\soundmixer\soundmixer\soundmixer\mainWindow.h(238): warning C4018: '<': signed/unsigned mismatch
+d:\dev\soundmixer\soundmixer\soundmixer\mainWindow.h(261): warning C4018: '<': signed/unsigned mismatch
+d:\dev\soundmixer\soundmixer\soundmixer\mainWindow.h(277): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+d:\dev\soundmixer\soundmixer\soundmixer\mainWindow.h(298): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\dev\soundmixer\soundmixer\soundmixer\mainWindow.h(306): warning C4018: '<': signed/unsigned mismatch
+mainWindow.cpp(64): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+mainWindow.cpp(88): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+  Mixer.cpp
+Mixer.cpp(113): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+Mixer.cpp(190): warning C4018: '<': signed/unsigned mismatch
+Mixer.cpp(267): warning C4018: '<': signed/unsigned mismatch
+Mixer.cpp(339): warning C4018: '<': signed/unsigned mismatch
+Mixer.cpp(419): warning C4018: '<': signed/unsigned mismatch
+Mixer.cpp(487): warning C4018: '<': signed/unsigned mismatch
+  Serial.cpp
+  Generating Code...
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  App.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  soundmixer.vcxproj -> D:\dev\soundmixer\soundmixer\Debug\soundmixer.exe
+  soundmixer.vcxproj -> D:\dev\soundmixer\soundmixer\Debug\soundmixer.pdb (Partial PDB)
